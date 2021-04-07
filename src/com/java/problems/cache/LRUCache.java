@@ -2,9 +2,6 @@ package com.java.problems.cache;
 
 
 
-import com.java.design.patterns.vending.machine.patterns.decorator.notifier.Notifier;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

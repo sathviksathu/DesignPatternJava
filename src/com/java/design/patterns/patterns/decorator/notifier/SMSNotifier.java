@@ -1,0 +1,14 @@
+package com.java.design.patterns.patterns.decorator.notifier;
+
+public class SMSNotifier implements Notifier {
+    private Notifier notifier;
+
+    public SMSNotifier(Notifier notifier) {
+        this.notifier = notifier;
+    }
+
+    @Override
+    public String notifyUsers() {
+        return notifier.notifyUsers()+ ",SMS ";
+    }
+}
