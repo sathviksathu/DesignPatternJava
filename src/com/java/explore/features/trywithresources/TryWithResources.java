@@ -1,4 +1,4 @@
-package com.java.design.patterns.Java8Features;
+package com.java.explore.features.trywithresources;
 
 public class TryWithResources {
     //Refer to these links
