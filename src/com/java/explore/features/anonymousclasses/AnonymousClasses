@@ -1,0 +1,43 @@
+# Anonymous classes
+
+They enable you to make the code more concise. They enable you to declare and instantiate a class at the same time. Use them if you need to use a local class only once.
+
+* Declaring Anonymous Classes
+* Syntax of Anonymous Classes
+* Examples of Anonymous Classes
+
+# Declaring Anonymous Classes
+Anonymous classes are expressions, which means that you define the class in an expression. In the Greeting example, we have a **`Greeting`** interface which expects the implementer to define the methods, **`sayHello()`** and **`sayHelloTo()`**.<br/>
+You have **`EnglishGreeting()`** as an explicit named local class which provides body to those two methods. Hence you can use it as follows:<br/>
+**`Greeting englishGreeting = new EnglishGreeting()`**<br/>
+Also, you have **`frenchGreeting`** which is a variable of type **`Greeting`** but it's instantiation is not done using an explicitly as in the case of **`EnglishGreeting`**. Instead it is done using a _**one-time class declaration as well as instantion**_ using anonymous class expression.
+
+~~~
+Greeting frenchGreeting = new Greeting() {
+         
+            @Override
+            public String sayHello() {
+                return "Bonjour";
+            }
+
+            @Override
+            public String sayHelloTo(String name) {
+                return "Bonjour"+" "+name;
+            }
+        };
+~~~
+
+## Syntax of Anonymous Classes
+As mentioned previously, an Anonymous class is an expression. THe syntax of an anonymous class expression is like the ivocation of a constructor, except that there is a class definition contained in a block of code.<br/>
+
+If you see the above block of code instantiating **`frenchGreeting`** :<br/>
+The anonymous class expression consists of the following:
+1) The **`new`** operator
+2) The name of an interface to implement or a class to extend. In this example, the anonymous class is implementing the interface **`Greeting`**
+3) Parantheses that contain contain the arguments to a constructor, just like a normal class instance creation expression.**Note:**
+When you implement an interface, there is no constructor, so you use an empty pair of parantheses, as in this example.
+4) A body, which is a class declaration body. More specifically, in the body, method declarations are allowed but statement are not.
+
+Because an anonymous class definition is an expression, which explains the semicolon after the closing brace.
+
+

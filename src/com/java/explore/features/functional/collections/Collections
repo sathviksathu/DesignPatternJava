@@ -1,0 +1,147 @@
+# Collections
+
+* The Collections API was introduced in Java7.
+* A Collection is a group of elements.
+* They can store, retrieve, manipulate and communicate aggregate data.
+
+Typically they represent data items that form a natural group, such as poker hand(a collection of cards),
+a mail folder(a collection of letters), or a telephone directory(a mapping of names to phone numbers).
+
+   [alt]https://docs.oracle.com/javase/tutorial/figures/collections/colls-coreInterfaces.gif
+
+ Collections API provides following interfaces:
+ 
+ * **Set** - A collection that does not contain duplicates.
+ * **List** - An ordered collection.
+ * **Map** - Contains mappings of (Key->Value).
+ 
+ Collections API interface contains following methods:
+ 
+ * `int size()`
+ * `boolean isEmpty()`
+ * `boolean contains(Object element)`
+ * `boolean add(E element)`
+ * `boolean remove(Object element)`
+ * `Iterator<E> iterator()`
+ 
+ # Traversing Collections
+ There are 3 ways to traverse collections:
+ 1) Using aggregate operations
+ 2) Using for-each construct
+ 3) Using Iterators
+ 
+ ### Aggregate Operations
+ In JDK8 and later, the preferred method of iterating over a collection is to 
+ obtain a stream and perform aggregate operations on it. Aggregate operations are 
+ often used in conjunction with lambda experssions to make programming more expression, using less lines of code.
+ 
+ The following code sequentially iterates through a collection of shapes and prints out the re d objects:
+ 
+ ```
+  myShapesCollection.stream().
+            .filter((shape) -> shape.getColor == Color.RED)
+            .forEach((shape) -> System.out.println(shape.getName()));
+ ```
+ 
+Likewise, you could easily request for a **parallel stream, which might make sense if the collection is large enough and your computed has enough cores.**
+
+There are many ways to collect data with this API, For example, you might want to convert the elements of a colleciton to string objects, then join them, seperated by commas.
+
+~~~
+String joined = elements.stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining(","); 
+~~~
+
+or perhas sum the salary of employees
+
+~~~
+int totalSalary = employees.stream()
+                            .collect(Collectors.summingInt(Employee::getSalary));
+~~~
+ 
+The collections framework has prior to JDK8 provided the so-called "bulk operations" as part of its API.
+These include methods that operate on entire collections, such as containsAll, addAll, removeALl, etc. 
+
+Do not confuse "buk operation" methods with "aggregate operations".
+
+The key difference between the new aggregate functions and the existing bulk operations(containsAll,addAll etc) is that the old
+versions are all mutative, meaning that they all modify the underlying collection. In contrast, the new aggregate operations do not modify
+the underlying collection.
+ 
+ **When using the new aggregate operations and lambda expressions, you must take care to avoid mutatuion so as not to introduce problems in the future, should your code be run later from a parallel stream.**
+ 
+ ### for-each construct
+ 
+ The for-each construct allows you to concisely traverse a collection or array using a for loop. 
+ 
+ The following code uses the for-each construct to print out each element of a collection on a seperate line.
+ 
+~~~
+for(Object o: collection){
+    System.out.println(o);
+}
+~~~
+
+### Iterators
+
+An Iterator is an object that enables you to traverse through a collection and to remove elements from the collection selectively, if desired.
+You get an Iterator for a collection by calling its iterator method. The following is the Iterator interface.
+
+~~~
+public interface Iterator<E> {
+    boolean hasNext();
+    E next();
+    void remove(); //optional
+}
+~~~
+
+The `hasNext` method returns true if the iteration has more elements
+The `next` method returns the next element in the iteration.
+The `remove` mehtod removes the last element that was returned by `next` from the underlying collection.
+
+**Note** that Iterator.remove is the only safe way to modify a collection during iteration; the behavior is
+unspecified if the underlying collection is modified in any other way while the iteration is in progress.
+
+Use `Iterator` instead of `for-each` construct when you need to:
+
+* Remove the current element. THe for-each construct hides the iterator, so you cannot call remove.
+Therefore, the `for-each` construct is not usable for filtering.
+* Iterate over multiple collections in parallel.
+
+The following methods shows you how to use an `Iterator` to filter an arbitrary Collection - that is, traverse the collection removing specific elements.
+
+~~~
+static void filter(Collection<?> c){
+    for(Iterator<?> it = c.iterator(); it.hasNext();){
+        if(!cond(it.next)){
+            it.remove();
+        }    
+    }
+}
+~~~
+
+This simple piece of code is polymorphic, which means that it works for any collection regardless of implementation. This example demonstrates how easy it is to write a polymorphic algorithm using the Java Collections Framework.
+
+## Collection Interface Bulk Operations
+
+Bulk operations perform an operation on an entire Collection.
+
+* **`containsAll`** - returns `true` if the target Collection contains all of the elements in the specified Collection.
+* **`addAll`** - adds all of the elements in the specified Collection to the target Collection.
+* **`removeAll`** - removes from the target Collection all of its elements thata are also contained in the specified Collection .
+* **`retainAll`** - removes from the target Collection all its elements that are not also contained in the specified Collection. That is, it retains only those elements in the target Collectino that are also contained in the specified collection.
+* **`clear`** - removes all elements from the Collection.
+
+The **`addAll`**, **`removeAll`**, **`retainAll`** methods all return true if the target collection was modified in the process of executing the operation.
+
+## Collection Interface Array Operations
+
+The toArray methods are provided as a bridge between collections and older APIs that expect arrays on input.
+The simple form with no arguments creates a new array of object:
+
+Object[] a = c.toArray();
+
+The more complex form allows the caller to provide an array or to choose the runtime type of the output array.
+
+String[] a = c.toArray(new String[0]);

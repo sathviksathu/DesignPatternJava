@@ -1,0 +1,116 @@
+# Generics Intro
+
+### [Link to original documentation](https://docs.oracle.com/javase/tutorial/extra/generics/simple.html)
+
+Generics allow you to abstract over types. The most common examples are container types, such as those in the Collections hierarchy.
+
+Here is a typical usage of that sort:
+
+~~~
+List myIntList = new LinkedList(); // 1
+myIntList.add(new Integer(0)); // 2
+Integer x = (Integer) myIntList.iterator().next(); // 3  
+~~~
+
+The cast on line 3 is slightly annoying. Typically, the programmer knows what kind of data has been placed into a particular list. However, the cast is essential. The compiler can only guarantee that an Object will be returned by the iterator. To ensure the assignment to a variable of type Integer is type safe, the cast is required.
+
+Of course, the cast not only introduces clutter. It also introduces the possibility of a run time error, since the programmer may be mistaken.
+
+**What if programmers could actually express their intent, and mark a list as being restricted to contain a particular data type? This is the core idea behind generics. Here is a version of the program fragment given above using generics:**
+
+~~~
+List<Integer> myIntList = new LinkedList<Integer>(); // 1'
+myIntList.add(new Integer(0)); // 2'
+Integer x = myIntList.iterator().next(); // 3'
+~~~
+
+Notice the type declaration for the variable myIntList. It specifies that this is not just an arbitrary List, but a List of Integer. We say that List is a generic interface that takes a type parameter--in this case, Integer. We also specify a type parameter when creating the list object.
+
+Note, too, that the cast on _line 3'_ is gone.
+
+Now, you might think that all we've accomplished is to move the clutter around. Instead of a cast to Integer on line 3, we have Integer as a type parameter on line 1'. However, there is a very big difference here. The compiler can now check the type correctness of the program at compile-time. When we say that myIntList is declared with type List<Integer>, this tells us something about the variable myIntList, which holds true wherever and whenever it is used, and the compiler will guarantee it. In contrast, the cast tells us something the programmer thinks is true at a single point in the code.
+
+## Defining Simple Generics
+
+Here is a small excerpt from the definitions of the interfaces List and Iterator in package java.util:
+
+~~~
+public interface List <E> {
+    void add(E x);
+    Iterator<E> iterator();
+}
+~~~
+
+The angle brackets `<>` is actually called diamond operator. E is the type parameter for the List Interface shown above.<br/>
+Type parameters can be used through out generic declaration, pretty much the same way we would use any other ordinary type.<br/>
+whenever there is an invocation of
+`List<Integer> genericList = new ArrayList<>();`
+
+The above interface can be reimagined to be as:
+~~~
+public interface List <Integer> {
+    void add(Integer x);
+    Iterator<Integer> iterator();
+}
+~~~
+
+You might imagine that List<Integer> stands for a version of List where E has been uniformly replaced by Integer:
+
+This intuition can be helpful, but it's also misleading.
+
+It is misleading, because the declaration of a generic is never actually expanded in this way. There aren't multiple copies of the code--not in source, not in binary, not on disk and not in memory.
+
+A generic type declaration is compiled once and for all, and turned into a single class file, just like an ordinary class or interface declaration.
+
+Type parameters are analogous to the ordinary parameters used in methods or constructors. Much like a method has formal value parameters that describe the kinds of values it operates on, a generic declaration has formal type parameters. When a method is invoked, actual arguments are substituted for the formal parameters, and the method body is evaluated. When a generic declaration is invoked, the actual type arguments are substituted for the formal type parameters.
+
+# Wildcards and Bounded Types
+
+? -> is the wildcard and is called the unknown.
+
+Consider the package bounded, where we have
+
+1) `Shape` - An abstract class
+2) `Rectangle` - A concrete implementation of Shape
+3) `Circle` -  A concrete implementation of Shape
+4) `Canvas` - which has `draw()` and `drawAll()` methods taking Shape as parameter
+5) `GenericCanvas` - which has `draw()` and `drawAll()` methods taking <? extends Shape> generic type as parameter
+
+Using `Canvas`, we can call the following line of code.
+~~~
+List<Shape> shapes = new ArrayList<>();
+List<Rectangle> rectangles = //a list of rectangles
+List<Circle> circles = //a list of circles
+shapes.addAll(rectangles);
+shapes.addAll(circles);
+Canvas.drawAll(shapes);
+~~~ 
+however, following lines would throw error:
+~~~
+Canvas.drawAll(rectangles);
+Canvas.drawAll(circles);
+~~~
+
+This is because Canvas is not generic enough to accept subclasses of type Shape. The solution would be to use
+a `GenericCanvas` which has the following `drawAll()` implementation.
+~~~
+public static void drawAll(List<? extends Shape> shapes){
+        for(Shape shape: shapes){
+            shape.draw();
+        }
+    }
+~~~
+
+Now we have a `drawAll()` method generic enough to accept the Shape subclasses.
+
+The line <? extends Shape> is called Bounded wildcard.The ? stands for an unknown type. We know that this unknown type is in fact a subtype of Shape. (Note: It could be Shape itself, or some subclass; it need not literally extend Shape.) We say that Shape is the upper bound of the wildcard.
+
+# Naming convetion
+
+* E – Element (used extensively by the Java Collections Framework, for example ArrayList, Set etc.)
+* K – Key (Used in Map)
+* N – Number
+* T – Type
+* V – Value (Used in Map)
+* S,U,V etc. – 2nd, 3rd, 4th types
+                                                      

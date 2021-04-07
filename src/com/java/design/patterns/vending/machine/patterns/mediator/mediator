@@ -1,0 +1,48 @@
+# Mediator Pattern
+
+Is a behavioral design which facilitates communication between components, while letting the components be unaware of each other's
+presence or absence in the system. The pattern restricts direct communications between the objects and forces them to collaborate only via a mediator object.
+                                
+# Real World Analogy
+
+Pilots of aircraft that approach or depart the airport control area don’t communicate directly with each other. Instead, they speak to an air traffic controller, who sits in a tall tower somewhere near the airstrip. Without the air traffic controller, pilots would need to be aware of every plane in the vicinity of the airport, discussing landing priorities with a committee of dozens of other pilots. That would probably skyrocket the airplane crash statistics.
+
+The tower doesn’t need to control the whole flight. It exists only to enforce constraints in the terminal area because the number of involved actors there might be overwhelming to a pilot.
+
+                         
+
+# Motivation
+
+Components may go in and out of system at any time. 
+ 
+ For example: 
+ 1) Chat room application
+ 2) Players in MMORPG (Massively multiplayer online role playing games)
+ 
+So, It makes no sense for them to have direct reference to one another, since those references may go dead 
+
+
+# Solution
+
+is to have all of the components refer to some central component that facilitates communication, which happens to be 
+the mediator
+
+# Mediator
+A component that facilitates communication between other components without them necessarily being 
+aware of each other or having direct reference (access) to each other.
+
+#Implementation in simple words
+Check list
+1. Identify a collection of interacting objects that would benefit from mutual decoupling.
+2. Encapsulate those interactions in the abstraction of a new class.
+3. Create an instance of that new class and rework all "peer" objects to interact with the Mediator only.
+4. Balance the principle of decoupling with the principle of distributing responsibility evenly.
+5. Be careful not to create a "controller" or "god" object.
+
+# Relation with other patterns
+Chain of Responsibility, Command, Mediator and Observer address various ways of connecting senders and receivers of requests:
+
+1. **_Chain of Responsibility_** passes a request sequentially along a dynamic chain of potential receivers until one of them handles it.
+2. **_Command_** establishes unidirectional connections between senders and receivers.
+3. **_Mediator_** eliminates direct connections between senders and receivers, forcing them to communicate indirectly via a mediator object.
+4. **_Observer_** lets receivers dynamically subscribe to and unsubscribe from receiving requests.

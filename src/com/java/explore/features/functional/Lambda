@@ -1,0 +1,48 @@
+# Lambda Expressions
+* Lambda expressions were introduced in java8.
+
+* They can be used to replace anonymous inner classes.
+
+* They can be used to instantiate one-method classes/interfaces.
+
+# Lambda Syntax
+(argList) -> {};
+(a,b) -> {a+b};
+
+* () -> parantheses for args, for no args lambda, it can be left empty.
+* argList -> List of arguments, which would be passed to that one-method in class/Interface
+* {} -> Method body which makes use of args and works on them.
+
+The type of args is inferred in lambda, by intelligently checking the arg types of that one-method in class/Interface
+
+# Note
+* Java is not considered to be a functional programming language, it is more 
+of a Object-oriented programming language. But beginning Java8, it is becoming 
+more and more functional programming friendly.
+
+* Java8 added two new packages.
+1. java.util.function
+2. java.util.stream
+
+# Functional Interface
+
+* Are defined as interfaces, which contain **atmost one abstract method**.
+* Represent abstract concepts such as functions, actions or predicates.
+
+Some of the commonly used interfaces include
+
+* **Predicate**: takes one argument, returns a boolean
+* **Consumer**: accepts one argument with no return value
+* **Function**: accepts one argument  and produces a result
+* **Supplier**: represents a supplier of results(do not take any args)
+* **UnaryOperator**: one argument with a return value
+* **BinaryOperator**: takes two arguments and returns one
+
+There are lot more functional interfaces which can be checked out at java.util.function
+
+### Functional interfaces can be created with lambda expressions, method references, or constructor references.
+
+
+
+ 
+

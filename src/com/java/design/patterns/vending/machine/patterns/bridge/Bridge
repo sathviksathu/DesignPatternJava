@@ -1,0 +1,65 @@
+#Adapter
+
+Bridge design pattern is used to decouple a class into two parts – abstraction and it’s implementation – so that both can evolve in future without affecting each other. It increases the loose coupling between class abstraction and it’s implementation.
+
+###Chekout: https://refactoring.guru/design-patterns/bridge
+
+
+# Problem
+
+***Consider the domain of thread scheduling***.
+
+There are two types of thread schedulers, and two types of operating systems or "platforms". Given this approach to specialization, we have to define a class for each permutation of these two dimensions. If we add a new platform (say ... Java's Virtual Machine), what would our hierarchy look like?
+
+What if we had three kinds of thread schedulers, and four kinds of platforms? What if we had five kinds of thread schedulers, and ten kinds of platforms? The number of classes we would have to define is the product of the number of scheduling schemes and the number of platforms.
+
+#Approach
+Bridge pattern aims to solve these kind of problems by extracting out the independently growable components(orthogonal dimensions) through abstraction and facilitaing composing those objects at run-time through composition, rather than having a
+specialized subclass for all possible scenarios. It aims at solving the "explosion of subclass" problem.
+
+Some examples of these orthogonal dimensions can be
+1. Shape and Drawer (implemented)
+2. Thread and Platform (sighted as example)
+
+#Participants of Bridge pattern
+
+1) High level abstract class, which contains the 
+   "HAS-A" relationship with the interface which
+   provides implementation of orthogonal dimension.
+   *For instance, Shape is the high level abstract class
+   which "HAS-A" Drawer.*
+   
+2) Concrete class, the classes that extend the above
+   higher level abstraction class, and there by inheriting
+   the orthogonal dimension they are expected to have.
+   *For instance, Circle and Square are the concrete subclasses
+   of Shape class, which have inherited Drawer from their parent.*
+   
+3) Implementer interface, the interface, which defines the 
+   functionality that the implementers are expected to bring in.
+   This also acts as a assurance for client classes, to be sure of
+   implementation of this functionality with any new implementer in the
+   future.
+   *For instance, Drawer is the interface, which expects its
+   implementer to define draw() method, and also it's part of
+   the High level abstraction shape class. So all subclasses
+   of Shape having Drawer can expect draw() functionlity to be
+   provided by any of the implementer.*
+   
+4) ConcreteImplementor, the actual classes which implement the 
+   above implementer, and can be composed into the object of
+   subclasses at runtime. This is the place we provide the implementation
+   of expected functionality.
+   *For instance, VectorDrawer and RasterDrawer are the implementers of
+   Drawer interface. We can instantiate any Shape object at run time with
+   either of these Drawer instances and be assured of the draw() functionality
+   that they will provide.*
+   
+#Trivia
+1.Bridge pattern decouple an abstraction from its implementation so that the two can vary independently.
+
+2.It is used mainly for implementing platform independence feature.
+
+3.Use bridge pattern to run-time binding of the implementation.
+
+4.Use bridge,when you have a proliferation of classes resulting from a coupled interface and numerous implementations.

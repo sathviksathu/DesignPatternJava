@@ -1,0 +1,34 @@
+# Testing
+* All programming assignments start with a set of business rules.
+* Sample input and expected output.
+* This information is used to write the program by the programmer.
+* Then it is used to test the application
+
+This is where JUnit comes in..
+
+* JUnit is a Java library used for unit testing.
+* Unit testing is process of examining small piece of software to verify that it meets the requirements.
+* The goal is to assert the expected behavior and state.
+* JUnit is not part of the standard Java class libraries.
+* It is included by some of the popular IDEs.
+
+
+There are many ways to test your code:
+* Can be done with a debugging tool.
+* It can also be done by adding print statements.
+
+These tools are good for finding any logic errors. However, these type of tests are limited by their reliance on human judgment.
+
+* JUnit provides automated testing and validation.
+* Junit provides tools to unit test all aspects of a program.
+* Unit testing is critical to the success of your application.
+* After all unit testing is done, integration tests are next.
+* Integration testing is used to test the entire system.
+* Another type of important testing in performance testing.
+* Integration & Performance testing are not part of JUnit testing.
+
+# Assertion
+
+* JUnit provides overloaded assertion methods, for all primitive datatypes and also for Objects and arrays of primitives or arrays of objects.
+* Parameter order is (expected value, actual value)
+* Can optionally have additional debug string as the first parameter.

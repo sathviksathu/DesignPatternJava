@@ -1,0 +1,90 @@
+# Modularity
+
+If Java 8 was about programming differently, Java 9 is about designing differently.
+
+Java 9 aims at:
+* Modularity as a first-class citizen
+* Designing for modularity early
+* New concepts, syntax and tools
+* Platform itself has been modularized
+* Smaller footprint
+
+## What is Modularity?
+It creates structure inside large software systems, by allowing them to
+be decomposed into smaller and more manageable pieces.
+
+**Absence of modularity makes a system monolithihc**
+
+**Modularity us not too important on a small scale, but it's crucial at larger scales**
+
+## Signs that your code is not modular
+
+* Changes become difficult
+* Long build and deploy times
+* Brittle upon execution
+* Outsize memory and disk optimization
+
+## Qualitites - 5 Pillar of Modularity
+* Encapsulated - control is restricted from outside
+* Interoperable - can work with other Modules
+* Composable - Modules can be combined with other modules
+* Expandable - Modules can be scaled up
+* Autonomous - Modules work independently
+
+**Modularity is inherently complex, but absence of it can lead to piles of mud. Modularity is necessary in large-scale systems.**
+
+## How has Java lived without modularity?
+* Third-party solutions
+* Industry-wide solutions
+* Already somewhat modular
+
+# Java 1 to 8 Weakness
+
+Class accessibility - public, private, protected
+Classpath hell 
+System footprint
+
+# New Artifacts
+
+The new module-info.java class - it's the class where dependencies and few other things are expressed.
+expresses accessibility at package-level
+expresses dependencies between modules and packages
+Modules -> are container of packages, just like packages are container of classes.
+Regular java class, it compiles just like any other java class
+Unlike regular class, only syntax related to module can be used
+Module meta-data available at runtime
+strict one-to-one relationship: One module-info per module
+Declared at the root of module
+Creates a namespace for the module
+Must be globally-unique- like package names
+No duplicate modules at runtime
+Modules dictate how packages are stored on filesystem
+Modules hierarchies must match filesystem hierarchies
+
+## New modularity Syntax
+* Declared at the root of module
+* It has to be named "module-info.java", hence few IDEs already have it as on option
+
+must begin with a module keyword, followed by module name
+Suppose you have two modules namely 
+1. com.red30tech.movement
+2. com.red30tech.axle
+
+then module-info.java file in movement
+
+if you want to expose this pa
+module com.red30tech.movement{
+    export com.red30tech.movement.api
+}
+
+export packages
+require modules
+
+Doesnt allow cyclic dependencies.
+Dependencies are not transitive
+Module A requires Module B
+Module B requires Module C
+Module C not available to Module A
+
+The dependent module doesnot get to choose which pacakage it wants.
+That is controlled by the module that exports the packages.
